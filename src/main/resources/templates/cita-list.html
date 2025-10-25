@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Citas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container w-75 mt-5">
+        <table class="table table-striped table-hover table-bordered table-sm table-responsive caption-top">
+            <caption><h1>Listado de Citas</h1></caption>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Servicio</th>
+                    <th>Barbero</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cita : ${citaList}">
+                    <td th:text="${cita.idCita}"></td>
+                    <td th:text="${cita.cliente.nombreCliente}"></td>
+                    <td th:text="${cita.servicio.nombreServicio}"></td>
+                    <td th:text="${cita.barbero.nombreBarbero}"></td>
+                    <td th:text="${cita.fecha}"></td>
+                    <td th:text="${cita.hora}"></td>
+                    <td th:text="${cita.estado}"></td>
+                    <td>
+                        <a th:href="@{/edit-cita/{id}(id=${cita.idCita})}" class="btn btn-primary btn-sm">Editar</a>
+                        <a th:href="@{/view-cita/{id}(id=${cita.idCita})}" class="btn btn-warning btn-sm">Ver</a>
+                        <a th:href="@{/remove-cita/{id}(id=${cita.idCita})}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/new-cita}" class="btn btn-success">Nueva Cita</a>
+        <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+    </div>
+</body>
+</html>

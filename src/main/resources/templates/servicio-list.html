@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Servicios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container w-75 mt-5">
+        <table class="table table-striped table-hover table-bordered table-sm table-responsive caption-top">
+            <caption><h1>Listado de Servicios</h1></caption>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Duración (min)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="servicio : ${servicioList}">
+                    <td th:text="${servicio.idServicio}"></td>
+                    <td th:text="${servicio.nombreServicio}"></td>
+                    <td th:text="${servicio.precioServicio}"></td>
+                    <td th:text="${servicio.duracionServicio}"></td>
+                    <td>
+                        <a th:href="@{/edit-servicio/{id}(id=${servicio.idServicio})}" class="btn btn-primary">Editar</a>
+                        <a th:href="@{/view-servicio/{id}(id=${servicio.idServicio})}" class="btn btn-warning">Ver</a>
+                        <a th:href="@{/remove-servicio/{id}(id=${servicio.idServicio})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/new-servicio}" class="btn btn-success">Nuevo Servicio</a>
+        <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Barbero</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+	      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	      crossorigin="anonymous">
+</head>
+<body>
+	<form th:action="${type} == 'N' ? @{/save-new-barbero} : @{/save-edit-barbero}"
+	      th:object="${barbero}" method="post" class="container row g-3 mt-3">
+
+		<!-- ID (solo lectura) -->
+		<div class="col-12">
+		    <label for="txtCodigo" class="form-label">Código</label>
+		    <input type="text" class="form-control form-control-sm" id="txtCodigo" readonly th:field="*{idBarbero}">
+		</div>
+
+		<!-- Nombre -->
+		<div class="col-12">
+		    <label for="txtNombre" class="form-label">Nombre</label>
+		    <input type="text" class="form-control form-control-sm" id="txtNombre" th:field="*{nombreBarbero}" th:readonly="${type.equals('V')}" autofocus>
+		</div>
+
+		<!-- Edad -->
+		<div class="col-12">
+		    <label for="txtEdad" class="form-label">Edad</label>
+		    <input type="number" class="form-control form-control-sm" id="txtEdad" th:field="*{edadBarbero}" th:readonly="${type.equals('V')}">
+		</div>
+
+		<!-- Email -->
+		<div class="col-12">
+		    <label for="txtEmail" class="form-label">Email</label>
+		    <input type="email" class="form-control form-control-sm" id="txtEmail" th:field="*{emailBarbero}" th:readonly="${type.equals('V')}">
+		</div>
+
+		<!-- Usuario -->
+		<div class="col-12">
+		    <label for="txtUsuario" class="form-label">Usuario</label>
+		    <input type="text" class="form-control form-control-sm" id="txtUsuario" th:field="*{usuarioBarbero}" th:readonly="${type.equals('V')}">
+		</div>
+
+		<!-- Contraseña -->
+		<div class="col-12">
+		    <label for="txtContrasena" class="form-label">Contraseña</label>
+		    <!-- Campo para Ver (type=text) -->
+   	 		<input type="text" class="form-control form-control-sm" id="txtContrasena" th:field="*{contrasenaBarbero}" th:if="${type.equals('V')}" readonly>
+    		<!-- Campo para Nuevo o Editar (type=password) -->
+    		<input type="password" class="form-control form-control-sm" id="txtContrasena"  th:field="*{contrasenaBarbero}" th:if="${!type.equals('V')}">
+		</div>
+
+		<!-- Botones -->
+		<div class="col-12">
+			<button type="submit" class="btn btn-success" th:if="${type != 'V'}">Grabar</button>
+			<a th:href="@{/barbero-list}" class="btn btn-secondary">Cancelar</a>
+		</div>
+	</form>
+</body>
+</html>

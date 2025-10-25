@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de Citas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container w-75 mt-5">
+    <caption><h1>Historial de Citas por Cliente</h1></caption>
+
+    <!-- Filtro de cliente -->
+    <form method="post" th:action="@{/consulta-historial-citas}" th:object="${cliente}" class="mb-4 row g-2 align-items-end">
+      <div class="col-8">
+        <label for="idCliente" class="form-label">Seleccione un Cliente</label>
+        <select id="idCliente" th:field="*{idCliente}" class="form-select" required>
+          <option value="" disabled>-- Seleccione --</option>
+          <option th:each="cl : ${clienteList}"
+                  th:value="${cl.idCliente}"
+                  th:text="${cl.nombreCliente}">
+          </option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+        <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+      </div>
+    </form>
+
+    <!-- Tabla de resultados -->
+    <table class="table table-striped table-hover table-bordered table-sm table-responsive caption-top"
+           th:if="${citas != null and !citas.isEmpty()}">
+      <caption><strong>Citas del Cliente</strong></caption>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Barbero</th>
+          <th>Servicio</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="c : ${citas}">
+          <td th:text="${c.idCita}"></td>
+          <td th:text="${c.fecha}"></td>
+          <td th:text="${c.hora}"></td>
+          <td th:text="${c.barbero.nombreBarbero}"></td>
+          <td th:text="${c.servicio.nombreServicio}"></td>
+          <td th:text="${c.estado}"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div th:if="${citas == null or citas.isEmpty()}" class="alert alert-warning">
+      No se encontraron citas para el cliente seleccionado.
+    </div>
+  </div>
+</body>
+</html>

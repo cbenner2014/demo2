@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Horario</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<form th:action="${type} == 'N' ? @{/save-new-horario} : @{/save-edit-horario}" th:object="${horario}" method="post" class="container mt-5">
+	<h2 th:switch="${type}">
+    	<span th:case="'V'">Ver Horario</span>
+    	<span th:case="'E'">Editar Horario</span>
+    	<span th:case="*">Nuevo Horario</span>
+	</h2>
+	<div class="mb-3">
+		<label for="txtCodigo" class="form-label">Código</label>
+		<input type="text" class="form-control" id="txtCodigo" readonly th:field="*{idHorario}">
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Día de la Semana</label>
+		<select class="form-select" th:field="*{diaSemana}" th:disabled="${type == 'V'}">
+			<option th:each="dia : ${T(com.proyecto.entity.DiaSemana).values()}" th:value="${dia}" th:text="${dia}"></option>
+		</select>
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Hora Inicio</label>
+		<input type="time" class="form-control" th:field="*{horaInicio}" th:readonly="${type == 'V'}">
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Hora Fin</label>
+		<input type="time" class="form-control" th:field="*{horaFin}" th:readonly="${type == 'V'}">
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Barbero</label>
+		<div th:if="${type == 'V'}">
+			<input type="text" class="form-control" th:value="${horario.barbero.nombreBarbero}" readonly>
+		</div>
+		<div th:if="${type != 'V'}">
+			<select class="form-select" th:field="*{barbero.idBarbero}">
+				<option th:each="barbero : ${barberoList}" th:value="${barbero.idBarbero}" th:text="${barbero.nombreBarbero}" th:selected="${barbero.idBarbero == horario.barbero.idBarbero}"></option>
+			</select>
+		</div>
+	</div>
+	<div class="mb-3">
+		<button type="submit" class="btn btn-success" th:if="${type != 'V'}">Guardar</button>
+		<a th:href="@{/horario-list}" class="btn btn-secondary">Cancelar</a>
+	</div>
+</form>
+</body>
+</html>

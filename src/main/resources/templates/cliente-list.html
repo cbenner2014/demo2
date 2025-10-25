@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container w-75 mt-5">
+    <table class="table table-striped table-hover table-bordered table-sm table-responsive caption-top">
+        <caption><h1>Listado de Clientes</h1></caption>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cliente : ${clienteList}">
+            <td th:text="${cliente.idCliente}"></td>
+            <td th:text="${cliente.nombreCliente}"></td>
+            <td th:text="${cliente.telefonoCliente}"></td>
+            <td th:text="${cliente.emailCliente}"></td>
+            <td>
+                <a th:href="@{/edit-cliente/{id}(id=${cliente.idCliente})}" class="btn btn-primary">Editar</a>
+                <a th:href="@{/view-cliente/{id}(id=${cliente.idCliente})}" class="btn btn-warning">Ver</a>
+                <a th:href="@{/remove-cliente/{id}(id=${cliente.idCliente})}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/new-cliente}" class="btn btn-success">Nuevo Cliente</a>
+    <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+</div>
+</body>
+</html>
