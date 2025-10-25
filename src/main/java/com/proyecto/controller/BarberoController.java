@@ -73,7 +73,7 @@ public class BarberoController {
         }
         return "redirect:/barbero-list";
     }
-	
+
 	@PostMapping("/save-edit-barbero")
     public String saveEditBarbero(@ModelAttribute Barbero barbero) {
         try {
